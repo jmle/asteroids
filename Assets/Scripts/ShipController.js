@@ -3,9 +3,15 @@
 // public member variables
 public var rotationSpeed : float;
 public var translationSpeed : float;
+public var misilePosY : float;
 
 public var leftImpulse : GameObject;
 public var rightImpulse : GameObject;
+public var misilePrefab : GameObject;
+
+// private member variables
+private var acceleration : float = 0;
+private var lastVelocity : float = 0;
 
 function Start () {
 	leftImpulse.SetActive (false);
@@ -18,9 +24,23 @@ function Update () {
 	
 	// Ship movement
 	transform.Rotate (0, 0, hAxis * rotationSpeed, Space.Self);
-	//transform.Translate (0, vAxis * translationSpeed, 0, Space.Self);
-	var forceVector : Vector2 = new Vector2 (0, vAxis * translationSpeed);
-	transform.rigidbody2D.AddRelativeForce (forceVector);
+	if (vAxis > 0) {
+		rigidbody2D.AddRelativeForce (new Vector2 (0, vAxis * translationSpeed));
+	}
+	
+	// Set impulses
+	if (Input.GetButton ("Up")) {
+		leftImpulse.SetActive (true);
+		rightImpulse.SetActive (true);
+	} else {
+		leftImpulse.SetActive (false);
+		rightImpulse.SetActive (false);
+	}
+	
+	// Instantiate misile
+	if (Input.GetButtonDown ("Jump")) {
+		var a : GameObject = Instantiate(misilePrefab, transform.TransformPoint (0, misilePosY, 0), 
+										 transform.rotation) as GameObject;
+	}
 	
 }
-
