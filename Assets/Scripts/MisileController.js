@@ -18,7 +18,7 @@ function FixedUpdate () {
 }
 
 function OnCollisionEnter2D (col : Collision2D) {
-	if (col.gameObject.tag.Equals("Limit")) {
+	if (col.gameObject.CompareTag ("Limit")) {
 		Destroy(gameObject);
 	}
 }
