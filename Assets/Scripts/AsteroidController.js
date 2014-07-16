@@ -5,11 +5,11 @@ public var mediumAsteroid : GameObject;
 public var smallAsteroid : GameObject;
 public var size : int;
 public var speed : float;
+public var velIncrease : float;
 
 // private member variables
 private var asteroidsController : AsteroidsController;
 private var direction : Vector2;
-
 
 function Start () {
 
@@ -27,7 +27,7 @@ function Awake () {
 }
 
 function FixedUpdate () {
-	// TODO: increase velocity with time: rigidbody2D.velocity *= velCoef;
+	// TODO: increase velocity with time: rigidbody2D.velocity *= velIncrease;
 	rigidbody2D.velocity = direction * speed;
 }
 
