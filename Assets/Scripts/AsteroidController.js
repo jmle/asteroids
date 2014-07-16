@@ -8,7 +8,6 @@ public var speed : float;
 public var velIncrease : float;
 
 // private member variables
-private var asteroidsController : AsteroidsController;
 private var direction : Vector2;
 
 function Start () {
@@ -16,10 +15,8 @@ function Start () {
 }
 
 function Awake () {
-	asteroidsController = GameObject.FindGameObjectWithTag ("AsteroidsController").GetComponent (typeof AsteroidsController);
 	
 	if (size == 3) {
-		// TODO: create random direction
 		direction.x = Random.Range (-1.0f, 1.0f);
 		direction.y = Random.Range (-1.0f, 1.0f);
 		direction = direction.normalized;
@@ -28,6 +25,7 @@ function Awake () {
 
 function FixedUpdate () {
 	// TODO: increase velocity with time: rigidbody2D.velocity *= velIncrease;
+	if (size == 3)
 	rigidbody2D.velocity = direction * speed;
 }
 
@@ -59,7 +57,6 @@ function InstantiateAsteroids (size : int) {
 	for (var i : int = 0; i < 2; i++) {
 		var asteroid : GameObject = Instantiate (asteroidPrefabToUse, transform.position + new Vector2(i, i),
 												 Quaternion.identity) as GameObject;
-		//var randomVel : Vector2 = rigidbody2D.velocity.normalized;
 		
 		asteroid.rigidbody2D.velocity = rigidbody2D.velocity; // Inherit velocity from parent.
 	}
