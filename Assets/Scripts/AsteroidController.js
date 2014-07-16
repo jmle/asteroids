@@ -1,22 +1,34 @@
 ﻿#pragma strict
 
 // public member variables
+public var mediumAsteroid : GameObject;
+public var smallAsteroid : GameObject;
 public var size : int;
+public var speed : float;
 
 // private member variables
 private var asteroidsController : AsteroidsController;
+private var direction : Vector2;
 
 
 function Start () {
-	asteroidsController = GameObject.FindGameObjectWithTag ("AsteroidsController").GetComponent (typeof AsteroidsController);
-	
-	// Add random force towards somewhere near center of the screen
-	var forceDirection : Vector2 = new Vector2 (0, 0) - transform.position;
-	rigidbody2D.AddForce (forceDirection * 10);
+
 }
 
-function Update () {
+function Awake () {
+	asteroidsController = GameObject.FindGameObjectWithTag ("AsteroidsController").GetComponent (typeof AsteroidsController);
 	
+	if (size == 3) {
+		// TODO: create random direction
+		direction.x = Random.Range (-1.0f, 1.0f);
+		direction.y = Random.Range (-1.0f, 1.0f);
+		direction = direction.normalized;
+	}
+}
+
+function FixedUpdate () {
+	// TODO: increase velocity with time: rigidbody2D.velocity *= velCoef;
+	rigidbody2D.velocity = direction * speed;
 }
 
 function OnCollisionEnter2D (col : Collision2D) {
@@ -25,28 +37,37 @@ function OnCollisionEnter2D (col : Collision2D) {
 		GameObject.Destroy (col.gameObject);
 		DestroyOrBreak ();
 	} else if (col.gameObject.CompareTag ("Limit")) {
+		// TODO: move asteroid to other side of the screen
 		Destroy (gameObject);
 	}
 }
 
 function DestroyOrBreak () {
+	if (size > 1) {
+		InstantiateAsteroids (size);
+	}
+	
 	// The current asteroid is always destroyed.
 	GameObject.Destroy (gameObject);
-	
-	switch (size) {
-		case 1: break;
-			
-		case 2:
-			// Size 2: create two 1-sized asteroids:
-			
-			break;
-			
-		case 3:
-			// Size 3: create two 2-sized asteroids:
-		
-			break;
+}
 
-		default:
-			break;
+function InstantiateAsteroids (size : int) {
+	// Choose the prefab depending on the size of the breaking asteroid (2 or 3)
+	var asteroidPrefabToUse : GameObject = (size == 2) ? smallAsteroid : mediumAsteroid;
+	
+	// Create asteroids:
+	for (var i : int = 0; i < 2; i++) {
+		var asteroid : GameObject = Instantiate (asteroidPrefabToUse, transform.position + new Vector2(i, i),
+												 Quaternion.identity) as GameObject;
+		//var randomVel : Vector2 = rigidbody2D.velocity.normalized;
+		
+		asteroid.rigidbody2D.velocity = rigidbody2D.velocity; // Inherit velocity from parent.
 	}
 }
+
+
+
+
+
+
+

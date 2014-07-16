@@ -2,12 +2,15 @@
 
 // public member variables
 public var speed : float;
+public var lifeTime : float;
 
 // private member variables
 private var velocity : Vector3;
+private var lifeCounter : float;
 
-function Start () {
+function Awake () {
 	velocity = new Vector3 ();
+	lifeCounter = lifeTime;
 }
 
 function FixedUpdate () {
@@ -15,10 +18,10 @@ function FixedUpdate () {
 	// its local coordinates (Space.Self):
 	velocity.y = speed * Time.deltaTime;
 	transform.Translate (velocity, Space.Self);
-}
-
-function OnCollisionEnter2D (col : Collision2D) {
-	if (col.gameObject.CompareTag ("Limit")) {
-		Destroy(gameObject);
+	
+	// Update life counter and destroy misile if it reached 0
+	lifeCounter -= Time.deltaTime;
+	if (lifeCounter <= 0) {
+		Destroy (gameObject);
 	}
 }

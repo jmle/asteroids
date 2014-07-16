@@ -14,10 +14,8 @@ private var spawnPoints : Array;
 function Start () {
 	asteroids = new List.<GameObject>();
 	spawnPoints = new Array ();
-}
-
-function Update () {
-	if (asteroids.Count <= numberOfAsteroids) {
+	
+	while (asteroids.Count < numberOfAsteroids) {
 		asteroids.Add (SpawnAsteroid ());
 	}
 }
