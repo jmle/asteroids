@@ -3,6 +3,7 @@
 // public member variables
 public var mediumAsteroid : GameObject;
 public var smallAsteroid : GameObject;
+public var explosion : GameObject;
 public var size : int;
 public var speed : float;
 public var velIncrease : float;
@@ -34,9 +35,9 @@ function OnCollisionEnter2D (col : Collision2D) {
 		// Destroy misile and destroy/break asteroids
 		GameObject.Destroy (col.gameObject);
 		DestroyOrBreak ();
-	} else if (col.gameObject.CompareTag ("Limit")) {
-		// TODO: move asteroid to other side of the screen
-		Destroy (gameObject);
+	} else if (col.gameObject.CompareTag ("Ship")) {
+		var explosion : GameObject = Instantiate (explosion, col.gameObject.transform.position, Quaternion.identity);
+		Destroy (col.gameObject);
 	}
 }
 
