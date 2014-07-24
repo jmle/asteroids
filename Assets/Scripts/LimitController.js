@@ -11,22 +11,22 @@ function OnCollisionEnter2D (col : Collision2D) {
 	// on the opposite side of the corresponding limit:
 	switch (limitType) {
 		case LimitType.RIGHT:	// Move to the left
-			newPosition.x = -9;
+			newPosition.x = -7.5;
 			newPosition.y = go.transform.position.y;
 			break;
 			
 		case LimitType.LEFT:	// Move to the right
-			newPosition.x = 9;
+			newPosition.x = 7.5;
 			newPosition.y = go.transform.position.y;
 			break;
 			
 		case LimitType.TOP:		// Move to bottom
-			newPosition.y = -9;
+			newPosition.y = -7.5;
 			newPosition.x = go.transform.position.x;
 			break;
 			
 		case LimitType.BOTTOM:	// Move to top
-			newPosition.y = 9;
+			newPosition.y = 7.5;
 			newPosition.x = go.transform.position.x;
 			break;
 			
@@ -35,6 +35,7 @@ function OnCollisionEnter2D (col : Collision2D) {
 	}
 	
 	go.transform.position = newPosition;
+	//go.transform.Translate (newPosition, Space.World);
 }
 
 public enum LimitType {

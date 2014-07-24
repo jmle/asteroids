@@ -12,21 +12,22 @@ public var velIncrease : float;
 private var direction : Vector2;
 
 function Start () {
-
-}
-
-function Awake () {
-	
 	if (size == 3) {
 		direction.x = Random.Range (-1.0f, 1.0f);
 		direction.y = Random.Range (-1.0f, 1.0f);
 		direction = direction.normalized;
+	} else {
+		direction = rigidbody2D.velocity.normalized;
 	}
+}
+
+function Awake () {
+	
+	
 }
 
 function FixedUpdate () {
 	// TODO: increase velocity with time: rigidbody2D.velocity *= velIncrease;
-	if (size == 3)
 	rigidbody2D.velocity = direction * speed;
 }
 
