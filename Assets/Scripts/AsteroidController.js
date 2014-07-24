@@ -18,12 +18,13 @@ function Start () {
 		direction = direction.normalized;
 	} else {
 		direction = rigidbody2D.velocity.normalized;
+		
+		// Add small change
+		var changeX : float = Random.Range (-0.5f, 0.5f);
+		var changeY : float = Random.Range (-0.5f, 0.5f);
+		direction.x += changeX;
+		direction.y += changeY;
 	}
-}
-
-function Awake () {
-	
-	
 }
 
 function FixedUpdate () {
